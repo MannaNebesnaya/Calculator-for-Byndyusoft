@@ -8,8 +8,6 @@ import static org.assertj.core.api.Assertions.assertThat;
 
 class MathUtilTest extends AbstractTest {
 
-
-
     @Test
     void isNumeric() {
         String actual = "220";
@@ -24,5 +22,4 @@ class MathUtilTest extends AbstractTest {
         boolean isNumeric = MathUtil.isNumeric(actual);
         assertThat(isNumeric).isFalse();
     }
-
 }
