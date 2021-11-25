@@ -29,10 +29,6 @@ public final class Calculator {
         priority.put(")", 9);
     }
 
-    private Calculator() {
-    }
-
-
     /**
      * <p>The expression may contain whole and decimal numbers,
      * signs: "+", "-", "*", "/", "." and brackets: "(", ")".</p>
@@ -93,32 +89,10 @@ public final class Calculator {
                 String A = list.remove(i - 2);
                 String B = list.remove(i - 2);
                 String operator = list.get(i - 2);
-                list.set(i - 2, MathFunctions(A, B, operator));
+//                list.set(i - 2, MathFunctions(A, B, operator));
                 i = 0;
             }
         }
-    }
-
-    private static String MathFunctions(String one, String first, String operator) {
-        double A = Double.parseDouble(one);
-        double B = Double.parseDouble(first);
-        double result = 0;
-
-        switch (operator) {
-            case "+":
-                result = A + B;
-                break;
-            case "-":
-                result = A - B;
-                break;
-            case "*":
-                result = A * B;
-                break;
-            case "/":
-                result = A / B;
-                break;
-        }
-        return String.valueOf(result);
     }
 
 
