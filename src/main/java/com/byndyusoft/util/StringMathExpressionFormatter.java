@@ -1,4 +1,4 @@
-package com.byndyusoft;
+package com.byndyusoft.util;
 
 public class StringMathExpressionFormatter {
 

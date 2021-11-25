@@ -43,7 +43,8 @@ public final class Calculator {
      *                                   signs or has an incorrect format
      */
     public Double calculator(String expression) throws IncorrectFormatExpression {
-        return calculateExpression(convertToList(expression));
+//        return calculateExpression(convertToList(expression));
+        return 0.0;
     }
 
     private static double calculateExpression(List<String> expression) {
@@ -121,34 +122,4 @@ public final class Calculator {
     }
 
 
-    private static List<String> convertToList(String expression) {
-        // Это будет первый метод. Он приводит строку к нужному виду.
-        expression = expression
-                .replaceAll(",", ".")
-                .replaceAll("·", "*")
-                .replaceAll("–", "-");
-        String[] expressionArray = expression.replaceAll("[^0-9[+\\-*/.()]]", "").split("");
-
-
-        // Это второй метод, который может быть поделен. Его задача - формирование строки.
-        // Это даже может быть другой класс, потому что задача первого - это замена символов и разделение по ним в массив (что тоже, кстати,
-        //                                                                                                        разная ответственность)
-
-        List<String> result = new ArrayList<>();
-        StringBuilder number = new StringBuilder();
-
-        for (String value : expressionArray) {
-            if (!isNumeric(value) && !value.equals(".")) {
-                if (!number.toString().isEmpty()) {
-                    result.add(number.toString());
-                }
-                result.add(value);
-                number.setLength(0);
-            } else {
-                number.append(value);
-            }
-        }
-        if (!number.toString().isEmpty()) result.add(number.toString());
-        return result;
-    }
 }
