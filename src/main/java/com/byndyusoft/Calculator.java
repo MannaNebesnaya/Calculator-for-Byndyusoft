@@ -1,12 +1,15 @@
 package com.byndyusoft;
 
 
+import com.byndyusoft.util.exception.IncorrectFormatExpression;
 import org.springframework.stereotype.Component;
 
 import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.concurrent.ConcurrentHashMap;
+
+import static com.byndyusoft.util.MathUtil.isNumeric;
 
 /**
  * The {@code Calculator} class contains a method for calculation expression in format String.
@@ -119,11 +122,17 @@ public final class Calculator {
 
 
     private static List<String> convertToList(String expression) {
+        // Это будет первый метод. Он приводит строку к нужному виду.
         expression = expression
                 .replaceAll(",", ".")
                 .replaceAll("·", "*")
                 .replaceAll("–", "-");
         String[] expressionArray = expression.replaceAll("[^0-9[+\\-*/.()]]", "").split("");
+
+
+        // Это второй метод, который может быть поделен. Его задача - формирование строки.
+        // Это даже может быть другой класс, потому что задача первого - это замена символов и разделение по ним в массив (что тоже, кстати,
+        //                                                                                                        разная ответственность)
 
         List<String> result = new ArrayList<>();
         StringBuilder number = new StringBuilder();
@@ -141,15 +150,5 @@ public final class Calculator {
         }
         if (!number.toString().isEmpty()) result.add(number.toString());
         return result;
-    }
-
-    // Util method
-    private static boolean isNumeric(String str) {
-        try {
-            Double.parseDouble(str);
-            return true;
-        } catch (NumberFormatException e) {
-            return false;
-        }
     }
 }
