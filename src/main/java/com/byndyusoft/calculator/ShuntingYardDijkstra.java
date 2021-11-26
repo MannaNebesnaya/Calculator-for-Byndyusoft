@@ -34,22 +34,29 @@ final public class ShuntingYardDijkstra {
 
         return sort(lexemes);
     }
-    // Приводим к виду ОПЗ (Обратной польской записи). Возвращает математическое выражение в виде ОПЗ
+
+    /**
+     *  Sorting the specified lexemes using Shunting-yard algorithm.
+     *  Not numeric lexemes are located in priority order.
+     *
+     *  <p>For Example:
+     *  <p>input: "(", "2.5", "+", "3.5", ")", "/", "5", "+", "1", "*", "(", "6", "+", "8", ")"
+     *  <p>output: "2.5", "3.5", "+", "5", "/", "1", "6", "8", "+", "*", "+"
+     * @param lexemes sequence of the lexemes
+     * @return the list sequence of the lexemes in the form Reverse Polish notation
+     */
     private static List<String> sort(List<String> lexemes) {
         LinkedList<String> outString = new LinkedList<>();
         LinkedList<String> stack = new LinkedList<>();
 
         for (String value : lexemes) {
-            // Если число, то добавляется в выходную строку
             if (isNumeric(value)) {
                 outString.add(value);
             } else {
-                // Если стек пустой или это '(', то кладём в стек
                 if (stack.isEmpty() || value.equals("(")) {
                     stack.add(value);
                     continue;
                 }
-                // Выталкиваем из стека все знаки до '('. '()' уничтожаются, не попадая в выходную строку
                 if (value.equals(")")) {
                     String temp;
                     try {
@@ -61,13 +68,10 @@ final public class ShuntingYardDijkstra {
                         throw new IncorrectFormatExpression("Parentheses put not true");
                     }
                 }
-                // Если value имеет больший приоритет, чем последний знак в стеке, то он просто кладётся в стек
                 if (getPriority(value) > getPriority(stack.getLast())) {
                     stack.add(value);
                     continue;
                 }
-                // Если value имеет меньший или равный(вот тут не уверен) приоритет, чем последний знак в стеке,
-                // то он выталкивает элементы из стека, пока имеет равный или меньший приоритет. После чего кладётся в стек
                 if (getPriority(value) <= getPriority(stack.getLast())) {
                     while (!stack.isEmpty()
                             && !stack.getLast().equals("(")
@@ -78,7 +82,6 @@ final public class ShuntingYardDijkstra {
                 }
             }
         }
-        // Передаём в выходную строку оставшиеся символы в стеке
         while (!stack.isEmpty()) outString.add(stack.removeLast());
 
         return outString;
