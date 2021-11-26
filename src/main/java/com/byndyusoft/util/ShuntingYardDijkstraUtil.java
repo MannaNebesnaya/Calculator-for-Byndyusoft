@@ -5,13 +5,21 @@ import java.util.List;
 
 import static com.byndyusoft.util.MathUtil.isNumeric;
 
-public class StringMathExpressionConverter {
+final public class ShuntingYardDijkstraUtil {
 
-    private StringMathExpressionConverter() {
+    private ShuntingYardDijkstraUtil() {
     }
 
-    public static List<String> convertToList(String expression) {
 
+    public static String syntaxCorrection(String expression) {
+        return expression
+                .replaceAll(",", ".")
+                .replaceAll("·", "*")
+                .replaceAll("–", "-")
+                .replaceAll("[^0-9[+\\-*/.()]]", "");
+    }
+
+    public static List<String> splitOnLexemes (String expression) {
         List<String> stack = new ArrayList<>();
         StringBuilder number = new StringBuilder();
 
